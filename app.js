@@ -49,5 +49,5 @@ app.get("/api/data", async (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server is running on http://<EC2_PUBLIC_IP>:${port}`);
+  console.log(`Server is running on http://13.127.212.236:3001`);
 });
