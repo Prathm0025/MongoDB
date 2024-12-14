@@ -47,7 +47,21 @@ app.get("/api/data", async (req, res) => {
   }
 });
 
+// API to check MongoDB server status
+app.get("/db-location", async (req, res, next) => {
+  try {
+    const admin = mongoose.connection.db.admin();
+    const serverStatus = await admin.serverStatus();
+
+    res.status(200).json({
+      serverStatus: serverStatus,
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Start the server
 app.listen(port, () => {
-  console.log(`Server is running on http://13.127.212.236:3001`);
+  console.log(`Server is running on http://3.110.135.201:${port}`);
 });
