@@ -48,8 +48,14 @@ app.get("/api/data", async (req, res) => {
 });
 
 // API to check MongoDB server status
-app.get("/db-location", async (req, res, next) => {
+app.get("/db-location", async (req, res) => {
   try {
+    // Check if the MongoDB connection is ready
+    if (!mongoose.connection.readyState) {
+      return res.status(500).json({ error: "MongoDB connection is not established" });
+    }
+
+    // Access the admin interface and fetch server status
     const admin = mongoose.connection.db.admin();
     const serverStatus = await admin.serverStatus();
 
