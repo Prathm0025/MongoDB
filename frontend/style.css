@@ -34,15 +34,17 @@ body {
 }
 
 /* Snowfall Effect */
-.snowfall {
+body::after {
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
-  background: url('https://i.imgur.com/B7j7oyN.png') repeat;
-  animation: snowfall 10s linear infinite;
+  background: radial-gradient(white, rgba(255, 255, 255, 0)) 1px 1px;
+  background-size: 10px 10px;
+  animation: snowfall 20s linear infinite;
 }
 
 @keyframes snowfall {
