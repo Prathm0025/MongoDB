@@ -58,6 +58,29 @@
     button:hover {
       background-color: #0056b3;
     }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 8px 0;
+      display: flex;
+      justify-content: space-between;
+      background: #f9f9f9;
+      padding: 8px 12px;
+      border-radius: 4px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .key {
+      font-weight: bold;
+    }
+
+    .value {
+      color: #555;
+    }
   </style>
 </head>
 <body>
@@ -100,9 +123,20 @@
       const response = await fetch("/api/data");
       const data = await response.json();
       dataList.innerHTML = "";
+
       data.forEach((item) => {
         const li = document.createElement("li");
-        li.textContent = `Key: ${item.key}, Value: ${item.value}`;
+
+        const keySpan = document.createElement("span");
+        keySpan.className = "key";
+        keySpan.textContent = `Key: ${item.key}`;
+
+        const valueSpan = document.createElement("span");
+        valueSpan.className = "value";
+        valueSpan.textContent = `Value: ${item.value}`;
+
+        li.appendChild(keySpan);
+        li.appendChild(valueSpan);
         dataList.appendChild(li);
       });
     }
