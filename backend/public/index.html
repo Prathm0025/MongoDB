@@ -59,27 +59,28 @@
       background-color: #0056b3;
     }
 
-    ul {
-      list-style-type: none;
-      padding: 0;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
     }
 
-    li {
-      margin: 8px 0;
-      display: flex;
-      justify-content: space-between;
-      background: #f9f9f9;
-      padding: 8px 12px;
-      border-radius: 4px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    table, th, td {
+      border: 1px solid #ddd;
     }
 
-    .key {
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f4f4f4;
       font-weight: bold;
     }
 
-    .value {
-      color: #555;
+    td {
+      background-color: #f9f9f9;
     }
   </style>
 </head>
@@ -94,12 +95,21 @@
       <button type="submit">Submit</button>
     </form>
     <h2>Saved Data:</h2>
-    <ul id="dataList"></ul>
+    <table id="dataTable">
+      <thead>
+        <tr>
+          <th>Key</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
   </div>
 
   <script>
     const form = document.getElementById("dataForm");
-    const dataList = document.getElementById("dataList");
+    const dataTable = document.getElementById("dataTable").querySelector("tbody");
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -122,22 +132,20 @@
     async function fetchData() {
       const response = await fetch("/api/data");
       const data = await response.json();
-      dataList.innerHTML = "";
+      dataTable.innerHTML = "";
 
       data.forEach((item) => {
-        const li = document.createElement("li");
+        const row = document.createElement("tr");
 
-        const keySpan = document.createElement("span");
-        keySpan.className = "key";
-        keySpan.textContent = `Key: ${item.key}`;
+        const keyCell = document.createElement("td");
+        keyCell.textContent = item.key;
 
-        const valueSpan = document.createElement("span");
-        valueSpan.className = "value";
-        valueSpan.textContent = `Value: ${item.value}`;
+        const valueCell = document.createElement("td");
+        valueCell.textContent = item.value;
 
-        li.appendChild(keySpan);
-        li.appendChild(valueSpan);
-        dataList.appendChild(li);
+        row.appendChild(keyCell);
+        row.appendChild(valueCell);
+        dataTable.appendChild(row);
       });
     }
 
